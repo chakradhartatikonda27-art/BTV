@@ -634,7 +634,45 @@ function logAuditAction(actorId, actorRole, action, entity, prevState, postState
   saveNrDatabase();
 }
 
-// --- INITIAL ON-LOAD BOOTSTRAP ---
+// --- INITIAL ON-LOAD BOOTSTRAP & FULL-STACK INTEGRATION ---
+async function initFullStackApp() {
+  try {
+    const articlesRes = await fetch('/api/articles');
+    if (articlesRes.ok) {
+      const dbArticles = await articlesRes.json();
+      if (Object.keys(dbArticles).length > 0) {
+        CONTENT_DATABASE.articles = dbArticles;
+      }
+    }
+  } catch (e) {
+    console.warn("Fullstack API fetch failed for articles, falling back to static database.", e);
+  }
+
+  try {
+    const shortsRes = await fetch('/api/shorts');
+    if (shortsRes.ok) {
+      const dbShorts = await shortsRes.json();
+      if (dbShorts.length > 0) {
+        CONTENT_DATABASE.shorts = dbShorts;
+      }
+    }
+  } catch (e) {
+    console.warn("Fullstack API fetch failed for shorts, falling back to static database.", e);
+  }
+
+  try {
+    const submissionsRes = await fetch('/api/submissions');
+    if (submissionsRes.ok) {
+      const dbSubmissions = await submissionsRes.json();
+      NR_SUBMISSIONS = dbSubmissions;
+    }
+  } catch (e) {
+    console.warn("Fullstack API fetch failed for submissions, falling back to localStorage.", e);
+  }
+
+  renderAll();
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   loadSavedPreferences();
   
@@ -647,8 +685,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // Start simulated ticking clock for active review SLA
   setInterval(updateSLATimers, 1000);
   
-  // Render views
-  renderAll();
+  // Initialize and load from Full-Stack backend
+  initFullStackApp();
   
   // Onboarding modal check
   checkOnboardingDialogs();
@@ -1148,7 +1186,6 @@ function handleReporterSubmit(event, platform) {
     const typeVal = document.getElementById('rep-type').value;
     const descVal = document.getElementById('rep-content').value;
     
-    // In Public Mode, submissions enter BTV Newsroom OS state machine automatically as a SUBMITTED Contributor item!
     const newSubmissionId = `submitted-${Date.now()}`;
     const newSubmission = {
       id: newSubmissionId,
@@ -1172,27 +1209,36 @@ function handleReporterSubmit(event, platform) {
       riskLevel: 'Normal Local',
       submittedTime: new Date().toISOString(),
       slaMinutes: 120,
-      history: [
-        { status: 'SUBMITTED', actor: 'Contributor', time: new Date().toISOString() }
-      ],
-      comments: [
-        { author: 'SYSTEM', text: 'Public community submission created. Strong editor audit required.', time: 'System' }
-      ],
-      attachments: []
+      photo: 'assets/hero_business_story.png',
+      videoUrl: '',
+      sources: 'Public Contributor Submission'
     };
 
-    NR_SUBMISSIONS.push(newSubmission);
-    saveNrDatabase();
-
-    // Log corporate audit trail
-    logAuditAction('BTV-CON-0089', 'Contributor', 'Story submission', newSubmissionId, 'none', 'SUBMITTED');
-
-    // Reset public form
-    document.getElementById('desktop-reporter-form').reset();
-    
-    alert("Reporter Alert: Brief submitted to the BTV Newsroom OS approval pipeline. A local editor will review it before public release!");
-    
-    renderAll();
+    fetch('/api/submissions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newSubmission)
+    })
+    .then(res => res.json())
+    .then(() => fetch('/api/submissions'))
+    .then(res => res.json())
+    .then(data => {
+      NR_SUBMISSIONS = data;
+      logAuditAction('BTV-CON-0089', 'Contributor', 'Story submission', newSubmissionId, 'none', 'SUBMITTED');
+      document.getElementById('desktop-reporter-form').reset();
+      alert("Reporter Alert: Brief submitted to the BTV Newsroom OS approval pipeline. A local editor will review it before public release!");
+      renderAll();
+    })
+    .catch(err => {
+      console.error(err);
+      // Fallback
+      NR_SUBMISSIONS.push(newSubmission);
+      saveNrDatabase();
+      logAuditAction('BTV-CON-0089', 'Contributor', 'Story submission', newSubmissionId, 'none', 'SUBMITTED');
+      document.getElementById('desktop-reporter-form').reset();
+      alert("Reporter Alert [Offline]: Brief submitted locally. A local editor will review it.");
+      renderAll();
+    });
   });
 }
 
@@ -2372,84 +2418,98 @@ function generateSimpleVisualDiff(origText, newText) {
 function handleAdminAction(action) {
   const sub = NR_SUBMISSIONS.find(s => s.id === activeAdminSelectionId);
   if (!sub) return;
-  
-  // State machine checks
-  if (action === 'approve') {
-    // 1. Move status
-    const prevStatus = sub.status;
-    sub.status = 'PUBLISHED';
-    sub.lockReviewer = null;
-    
-    // Save corrections if admin edited
-    sub.headline = adminEdits.headline || sub.headline;
-    sub.summary = adminEdits.summary || sub.summary;
-    sub.content = adminEdits.content || sub.content;
 
-    // 2. Publish back to reader viewports!
-    const newArticleId = `pub-${Date.now()}`;
-    const newPublishedArticle = {
-      id: newArticleId,
-      category: sub.category,
-      location: sub.city,
-      author: sub.reporterName,
-      readTime: Math.ceil(sub.content.split(' ').length / 150) || 3,
-      title: { en: sub.headline, te: sub.headline },
-      description: { en: sub.summary, te: sub.summary },
-      text: { en: sub.content, te: sub.content }
-    };
-    
-    CONTENT_DATABASE.articles[newArticleId] = newPublishedArticle;
-    savePreferences();
-    
-    // Log corporate Audit log trail
-    logAuditAction(activeNrUser.id, activeNrUser.role, 'Story Approved & Published', sub.id, prevStatus, 'PUBLISHED');
-    
-    alert(`Success: Story approved and published live to BTV platforms!`);
-  }
+  let body = {};
   
+  if (action === 'approve') {
+    body = {
+      status: 'PUBLISHED',
+      actor: activeNrUser.name,
+      comment: null
+    };
+  }
   else if (action === 'request_changes') {
     const feedback = prompt("Enter correction comments to send back to the reporter:");
     if (!feedback) return;
-    
-    const prevStatus = sub.status;
-    sub.status = 'CHANGES REQUESTED';
-    sub.lockReviewer = null;
-    sub.comments.push({
-      author: `${activeNrUser.name} (${activeNrUser.role})`,
-      text: `Corrections Required: ${feedback}`,
-      time: new Date().toLocaleTimeString().substring(0, 5)
-    });
-    
-    logAuditAction(activeNrUser.id, activeNrUser.role, 'Story Changes Requested', sub.id, prevStatus, 'CHANGES REQUESTED');
-    alert("Feedback sent. Submission returned to Reporter Portal.");
+    body = {
+      status: 'CHANGES REQUESTED',
+      actor: activeNrUser.name,
+      comment: `Corrections Required: ${feedback}`
+    };
   }
-  
   else if (action === 'escalate') {
-    const prevStatus = sub.status;
-    sub.status = 'ESCALATED';
-    sub.lockReviewer = null;
-    sub.comments.push({
-      author: `${activeNrUser.name} (${activeNrUser.role})`,
-      text: `Escalated story to State/Central editors for policy auditing.`,
-      time: new Date().toLocaleTimeString().substring(0, 5)
-    });
-    
-    logAuditAction(activeNrUser.id, activeNrUser.role, 'Story Escalated', sub.id, prevStatus, 'ESCALATED');
-    alert("Story escalated. Sent to higher editors queues.");
+    body = {
+      status: 'ESCALATED',
+      actor: activeNrUser.name,
+      comment: 'Escalated story to State/Central editors for policy auditing.'
+    };
   }
-  
   else if (action === 'reject') {
     if (!confirm("Are you sure you want to permanently reject this submission?")) return;
-    
-    const prevStatus = sub.status;
-    sub.status = 'REJECTED';
-    sub.lockReviewer = null;
-    logAuditAction(activeNrUser.id, activeNrUser.role, 'Story Rejected', sub.id, prevStatus, 'REJECTED');
-    alert("Submission rejected and removed from active queues.");
+    body = {
+      status: 'REJECTED',
+      actor: activeNrUser.name,
+      comment: 'Rejected permanently'
+    };
   }
 
-  saveNrDatabase();
-  renderAll();
+  fetch(`/api/submissions/${sub.id}/status`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  })
+  .then(res => res.json())
+  .then(() => fetch('/api/submissions'))
+  .then(res => res.json())
+  .then(data => {
+    NR_SUBMISSIONS = data;
+    // Refresh articles database if it was approved/published
+    if (action === 'approve') {
+      fetch('/api/articles')
+        .then(res => res.json())
+        .then(arts => {
+          CONTENT_DATABASE.articles = arts;
+          alert("Success: Story approved and published live to BTV platforms!");
+          renderAll();
+        });
+    } else {
+      renderAll();
+    }
+  })
+  .catch(err => {
+    console.error("Workflow update failed, using local simulation fallback", err);
+    // Offline fallback logic
+    if (action === 'approve') {
+      sub.status = 'PUBLISHED';
+      sub.lockReviewer = null;
+      sub.headline = adminEdits.headline || sub.headline;
+      sub.summary = adminEdits.summary || sub.summary;
+      sub.content = adminEdits.content || sub.content;
+
+      const newArticleId = `pub-${Date.now()}`;
+      CONTENT_DATABASE.articles[newArticleId] = {
+        id: newArticleId,
+        category: sub.category,
+        location: sub.city,
+        author: sub.reporterName,
+        readTime: 3,
+        title: { en: sub.headline, te: sub.headline },
+        description: { en: sub.summary, te: sub.summary },
+        text: { en: sub.content, te: sub.content }
+      };
+    } else if (action === 'request_changes') {
+      sub.status = 'CHANGES REQUESTED';
+      sub.lockReviewer = null;
+    } else if (action === 'escalate') {
+      sub.status = 'ESCALATED';
+      sub.lockReviewer = null;
+    } else if (action === 'reject') {
+      sub.status = 'REJECTED';
+      sub.lockReviewer = null;
+    }
+    saveNrDatabase();
+    renderAll();
+  });
 }
 
 function sendEditorialComment() {
@@ -2507,6 +2567,17 @@ function updateSLATimers() {
         time: 'Auto'
       });
       logAuditAction('SLA Engine', 'Automated Service', 'Auto-escalation SLA Breach', sub.id, 'SUBMITTED', 'ESCALATED');
+      
+      fetch(`/api/submissions/${sub.id}/status`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          status: 'ESCALATED',
+          actor: 'SLA Engine',
+          comment: 'Review time exceeded. Auto-escalated to Chief Editors.'
+        })
+      }).catch(e => console.warn("SLA backend update failed", e));
+
       saveNrDatabase();
       renderAll();
     }
