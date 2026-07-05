@@ -9,16 +9,12 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Serve static frontend files from root directory
-app.use(express.static(__dirname));
-
 // Route: Get all published articles
 app.get('/api/articles', (req, res) => {
   db.all('SELECT * FROM articles', [], (err, rows) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
-    // Map database flat rows back to bilingual nested objects
     const articles = {};
     rows.forEach(row => {
       articles[row.id] = {
@@ -168,10 +164,8 @@ app.put('/api/submissions/:id/status', (req, res) => {
     const historyStr = JSON.stringify(history);
 
     db.serialize(() => {
-      // Update status and history in submissions
       db.run('UPDATE submissions SET status = ?, history = ? WHERE id = ?', [status, historyStr, subId]);
 
-      // If approved, publish to articles table!
       if (status === 'APPROVED' || status === 'PUBLISHED') {
         const artId = `art-${Date.now()}`;
         db.run(`INSERT OR REPLACE INTO articles (
@@ -185,7 +179,6 @@ app.put('/api/submissions/:id/status', (req, res) => {
         console.log(`Automatically published submission ${subId} as Article ${artId}`);
       }
 
-      // Add comment if provided
       if (comment) {
         const commentId = `c-${Date.now()}`;
         db.run('INSERT INTO comments (id, submissionId, author, text, time) VALUES (?, ?, ?, ?, ?)', [
@@ -198,6 +191,13 @@ app.put('/api/submissions/:id/status', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-});
+// Fallback to serving public static files if running locally in dev mode
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  const rootDir = path.join(__dirname, '..');
+  app.use(express.static(rootDir));
+  app.listen(PORT, () => {
+    console.log(`Server is running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;

@@ -3,7 +3,7 @@ const path = require('path');
 
 // Use in-memory SQLite on Vercel to bypass read-only filesystem restrictions
 const isVercel = process.env.VERCEL || process.env.NOW_BUILDER;
-const dbPath = isVercel ? ':memory:' : path.join(__dirname, 'btv_live.db');
+const dbPath = isVercel ? ':memory:' : path.join(__dirname, '..', 'btv_live.db');
 
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
@@ -212,7 +212,7 @@ function seedDatabase() {
       title_en: "Vizag FinTech Valley Expansion",
       title_te: "వైజాగ్ ఫిన్‌టెక్ వ్యాలీ విస్తరణ",
       body_en: "Three global payment software companies signed leases at Vizag FinTech Valley. The expansion is projected to create 1,200 software engineering roles by the end of 2026, boosting local tech talent recruitment and real estate demand.",
-      body_te: "మూడు గ్లోబల్ పేమెంట్ సాఫ్ట్‌వేర్ కంపెనీలు వైజాగ్ ఫిన్‌టెక్ వ్యాలీలో ఒప్పందంకుదుర్చుకున్నాయి. ఈ విస్తరణ ద్వారా 2026 నాటికి 1,200 కొత్త సాఫ్ట్‌వేర్ ఇంజనీరింగ్ ఉద్యోగాలు లభించనున్నాయి."
+      body_te: "మూడు గ్లోబల్ పేమెంట్ సాఫ్ట్‌വേర్ కంపెనీలు వైజాగ్ ఫిన్‌టెక్ వ్యాలీలో ఒప్పందంకుదుర్చుకున్నాయి. ఈ విస్తరణ ద్వారా 2026 నాటికి 1,200 కొత్త సాఫ్ట్‌വേర్ ఇంజనీరింగ్ ఉద్యోగాలు లభించనున్నాయి."
     },
     {
       id: 'short-3',
