@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTV LIVE — India's Premier Business Journalism & Local Opportunity Network</title>
+  <!-- Google Fonts: Outfit (modern sans-serif) & Noto Sans Telugu (for premium native typography) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+Telugu:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet link -->
+  <link rel="stylesheet" href="index.css?v=5">
+</head>
+<body class="dark-theme">
+  <!-- Global Top Header/Dashboard Bar -->
+  <header class="global-header">
+    <div class="header-logo">
+      <img src="assets/logo.jpg" alt="BTV LIVE Logo" class="brand-logo-img">
+      <span class="live-indicator">LIVE</span>
+      <h1>BTV LIVE</h1>
+      <span class="tagline">Newsroom OS & Feed</span>
+    </div>
+    
+    <div class="header-controls">
+      <!-- Quick Language Selector -->
+      <div class="lang-switch-container">
+        <button id="global-lang-btn" class="lang-btn" onclick="toggleLanguage()">
+          <span class="lang-en">English</span>
+          <span class="lang-divider">|</span>
+          <span class="lang-te">తెలుగు</span>
+        </button>
+      </div>
+
+      <!-- Quick Reset button for testing onboarding -->
+      <button class="reset-btn" onclick="resetOnboarding()" title="Reset onboarding states to test first-visit flow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        Reset Onboarding
+      </button>
+
+      <!-- App Mode Selector (Public Reader Mode vs Newsroom OS) -->
+      <div class="mode-selector">
+        <button id="mode-reader-btn" class="mode-btn active" onclick="switchAppMode('reader')">Reader View</button>
+        <button id="mode-newsroom-btn" class="mode-btn" onclick="switchAppMode('newsroom')">Newsroom OS</button>
+      </div>
+
+      <!-- View Selector (Only visible in Reader View) -->
+      <div class="view-selector" id="reader-view-selectors">
+        <button id="view-split-btn" class="view-btn active" onclick="setViewMode('split')">Split</button>
+        <button id="view-desktop-btn" class="view-btn" onclick="setViewMode('desktop')">Editorial</button>
+        <button id="view-mobile-btn" class="view-btn" onclick="setViewMode('mobile')">Mobile</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Live Market Ticker Bar -->
+  <div class="market-ticker-bar">
+    <div class="ticker-wrapper">
+      <div class="ticker-content">
+        <span class="ticker-item"><span class="ticker-city">GUNTUR Chilli:</span> ₹18,400/Qtl <span class="trend up">▲ +1.8%</span></span>
+        <span class="ticker-item"><span class="ticker-city">WARANGAL Cotton:</span> ₹7,250/Qtl <span class="trend down">▼ -0.5%</span></span>
+        <span class="ticker-item"><span class="ticker-city">NIZAMABAD Turmeric:</span> ₹12,800/Qtl <span class="trend up">▲ +3.2%</span></span>
+        <span class="ticker-item"><span class="ticker-city">VIJAYAWADA Land Lease:</span> index 142.5 <span class="trend up">▲ +1.1%</span></span>
+        <span class="ticker-item"><span class="ticker-city">VIZAG Shrimp Export:</span> index 118.2 <span class="trend up">▲ +2.5%</span></span>
+        <span class="ticker-item"><span class="ticker-city">HYDERABAD 24k Gold:</span> ₹72,400/10g <span class="trend up">▲ +0.4%</span></span>
+        <!-- Duplicate for infinite loop -->
+        <span class="ticker-item"><span class="ticker-city">GUNTUR Chilli:</span> ₹18,400/Qtl <span class="trend up">▲ +1.8%</span></span>
+        <span class="ticker-item"><span class="ticker-city">WARANGAL Cotton:</span> ₹7,250/Qtl <span class="trend down">▼ -0.5%</span></span>
+        <span class="ticker-item"><span class="ticker-city">NIZAMABAD Turmeric:</span> ₹12,800/Qtl <span class="trend up">▲ +3.2%</span></span>
+        <span class="ticker-item"><span class="ticker-city">VIJAYAWADA Land Lease:</span> index 142.5 <span class="trend up">▲ +1.1%</span></span>
+        <span class="ticker-item"><span class="ticker-city">VIZAG Shrimp Export:</span> index 118.2 <span class="trend up">▲ +2.5%</span></span>
+        <span class="ticker-item"><span class="ticker-city">HYDERABAD 24k Gold:</span> ₹72,400/10g <span class="trend up">▲ +0.4%</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== VIEW 1: PUBLIC READER VIEW ======================== -->
+  <main class="workspace-container split-view" id="workspace">
+    <!-- LEFT PANEL: EDITORIAL HOMEPAGE (Desktop Premium Layout) -->
+    <section class="editorial-homepage-view" id="editorial-homepage">
+      <div class="editorial-scroll-container">
+        <!-- Editorial Header -->
+        <header class="editorial-masthead">
+          <div class="masthead-meta">
+            <span id="editorial-date">Saturday, July 4, 2026</span>
+            <span class="masthead-location">AP & Telangana Edition</span>
+          </div>
+          <div class="masthead-title-container">
+            <h2 class="editorial-main-title" data-en="BUSINESS TELECAST & VENTURE" data-te="బిజినెస్ టెలికాస్ట్ & వెంచర్">BUSINESS TELECAST & VENTURE</h2>
+          </div>
+        </header>
+
+        <!-- Prime Top Story Grid -->
+        <div class="editorial-grid-hero">
+          <!-- Main Hero Column -->
+          <div class="hero-story-card">
+            <div class="hero-image-wrapper">
+              <img src="assets/hero_business_story.png" alt="Hyderabad Tech Startup Scene" class="hero-img">
+              <span class="category-badge" data-en="Startups" data-te="స్టార్టప్‌లు">Startups</span>
+            </div>
+            <div class="hero-story-content">
+              <div class="story-meta">
+                <span class="read-time"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 4 min read</span>
+                <span class="location-tag"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg> Hyderabad</span>
+              </div>
+              
+              <h3 class="hero-title" id="pub-hero-title" data-en="Hyderabad Tech Ecosystem Surges: T-Hub Becomes South India's Innovation Nucleus" data-te="హైదరాబాద్ టెక్ ఇకోసిస్టమ్ ఉప్పెన: దక్షిణ భారతదేశ ఆవిష్కరణ కేంద్రంగా మారిన టి-హబ్">
+                Hyderabad Tech Ecosystem Surges: T-Hub Becomes South India's Innovation Nucleus
+              </h3>
+              
+              <p class="hero-description" id="pub-hero-desc" data-en="Local startups raised a staggering $150M in Q2 2026. Experts believe the combination of world-class infrastructure and supportive state policies makes Telangana the preferred destination for high-growth tech firms." data-te="స్థానిక స్టార్టప్‌లు 2026 క్యూ2లో భారీగా $150 మిలియన్ల నిధులను సేకరించాయి. ప్రపంచ స్థాయి మౌలిక సదుపాయాలు మరియు సహాయక రాష్ట్ర విధానాలు తెలంగాణను అత్యధిక వృద్ధి చెందే టెక్ సంస్థలకు అనుకూలమైన గమ్యస్థానంగా మారుస్తున్నాయని నిపుణులు అభిప్రాయపడుతున్నారు.">
+                Local startups raised a staggering $150M in Q2 2026. Experts believe the combination of world-class infrastructure and supportive state policies makes Telangana the preferred destination for high-growth tech firms.
+              </p>
+
+              <!-- Action Bar -->
+              <div class="story-actions">
+                <button class="action-btn play-audio-btn" onclick="playAudioStory('hero')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                  <span data-en="Listen to Story" data-te="కథ వినండి">Listen to Story</span>
+                </button>
+                <button class="action-btn save-btn" onclick="toggleSaveStory('hero', this)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                  <span data-en="Save" data-te="సేవ్ చేయి">Save</span>
+                </button>
+                <button class="action-btn follow-btn" onclick="toggleFollow('topic', 'Startups', this)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                  <span data-en="Follow Topic" data-te="టాపిక్ అనుసరించు">Follow Topic</span>
+                </button>
+                <button class="action-btn share-wa-btn" onclick="shareWhatsApp('hero')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+                    <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.949h.004c4.368 0 7.927-3.558 7.93-7.93a7.9 7.9 0 0 0-2.327-5.586L13.601 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.69-4.98c-.2-.1-.1.185-.3.268-.168.08-.28.1-.383.048-.096-.048-.2-.08-.344-.145-.583-.26-1.004-.63-1.19-.95-.12-.2-.03-.306.072-.408.09-.09.186-.2.276-.3.08-.1.1-.168.162-.3a.37.37 0 0 0-.018-.34c-.05-.1-.45-1.08-.616-1.482-.162-.395-.326-.34-.447-.346-.112-.004-.24-.006-.37-.006-.13 0-.343.05-.522.247-.18.197-.684.667-.684 1.629s.7 1.888.798 2.022c.1.13 1.378 2.1 3.342 2.951.468.203.832.324 1.117.414.47.15.898.13 1.237.08.378-.057 1.16-.474 1.322-.93.16-.456.16-.846.11-.93-.046-.085-.18-.13-.378-.225"/>
+                  </svg>
+                  <span>WhatsApp</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Broadcast & Sidebar Column -->
+          <div class="editorial-sidebar">
+            <!-- Pulsing Live Broadcast Box -->
+            <div class="live-broadcast-card">
+              <div class="live-header">
+                <div class="live-pulse-wrapper">
+                  <span class="live-dot"></span>
+                  <span class="live-text" data-en="LIVE BROADCAST" data-te="లైవ్ బ్రాడ్‌కాస్ట్">LIVE BROADCAST</span>
+                </div>
+                <div class="viewers-count">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <span>14.2K watching</span>
+                </div>
+              </div>
+              
+              <!-- Video Frame Mockup -->
+              <div class="live-video-viewport" onclick="togglePlayLiveStream(this)">
+                <div class="video-overlay">
+                  <div class="play-btn-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  </div>
+                  <span class="video-overlay-text" data-en="Click to Play Live Stream" data-te="లైవ్ స్ట్రీమ్ ప్లే చేయడానికి క్లిక్ చేయండి">Click to Play Live Stream</span>
+                </div>
+                
+                <!-- Mock animated canvas/graphics for live broadcast -->
+                <div class="mock-video-canvas" id="live-canvas-visual">
+                  <div class="mock-ticker-title" data-en="Panel Discussion: Tech Growth in Tier 2 Towns" data-te="ప్యానెల్ చర్చ: టైర్ 2 నగరాల్లో టెక్నాలజీ వృద్ధి">Panel Discussion: Tech Growth in Tier 2 Towns</div>
+                  <!-- Simulating participants with styled initials circles -->
+                  <div class="mock-speaker-row">
+                    <div class="speaker-avatar">RN</div>
+                    <div class="speaker-avatar">KA</div>
+                    <div class="speaker-avatar">PV</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live Scrolling Chat -->
+              <div class="live-chat-box">
+                <div class="chat-messages-container" id="live-chat-messages">
+                  <div class="chat-msg"><strong>Srinivas K:</strong> Outstanding points on infrastructure!</div>
+                  <div class="chat-msg"><strong>Latha:</strong> విశాఖపట్నంలో మరిన్ని అవకాశాలు ఎప్పుడు వస్తాయి?</div>
+                  <div class="chat-msg"><strong>Anil Kumar:</strong> Excellent reporting, BTV.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Morning 7 / Evening 7 Digest Cards -->
+            <div class="daily-digest-container">
+              <!-- Morning 7 Card -->
+              <div class="digest-card morning">
+                <div class="digest-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                  <span data-en="MORNING 7 DIGEST" data-te="మార్నింగ్ 7 డైజెస్ట్">MORNING 7 DIGEST</span>
+                </div>
+                <h4 data-en="Top 7 Business updates you need to start your day at 7 AM" data-te="మీ రోజును ప్రారంభించడానికి ఉదయం 7 గంటలకు 7 ముఖ్యమైన వార్తలు">Top 7 Business updates you need to start your day at 7 AM</h4>
+                <button class="digest-action-btn" onclick="openDigest('morning')">
+                  <span data-en="Read 7 Bulletins" data-te="7 వార్తా బుల్లెటిన్లు చదవండి">Read 7 Bulletins</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+
+              <!-- Evening 7 Card -->
+              <div class="digest-card evening">
+                <div class="digest-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                  <span data-en="EVENING 7 RECAP" data-te="ఈవినింగ్ 7 రీక్యాప్">EVENING 7 RECAP</span>
+                </div>
+                <h4 data-en="7-minute wrap-up of today's market movements & business events" data-te="నేటి మార్కెట్ కదలికలు & వ్యాపార సంఘటనల 7 నిమిషాల రీక్యాప్">7-minute wrap-up of today's market movements & business events</h4>
+                <button class="digest-action-btn" onclick="openDigest('evening')">
+                  <span data-en="Read Recap" data-te="రీక్యాప్ చదవండి">Read Recap</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+
+              <!-- Daily Business Word of the Day -->
+              <div class="digest-card word-of-the-day" style="background: linear-gradient(135deg, rgba(0, 214, 185, 0.03) 0%, rgba(255, 210, 26, 0.03) 100%); border-left: 4px solid var(--color-secondary);">
+                <div class="digest-badge" style="color: var(--color-primary);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                  <span data-en="DAILY BUSINESS GLOSSARY" data-te="రోజువారీ వ్యాపార నిఘంటువు">DAILY BUSINESS GLOSSARY</span>
+                </div>
+                <h4 style="font-size:1rem; font-weight:800; color:var(--color-secondary);" data-en="Venture Capital" data-te="వెంచర్ క్యాపిటల్ (సాహస పెట్టుబడి)">Venture Capital</h4>
+                <p style="font-size:0.8rem; color:var(--text-muted); line-height:1.4;" data-en="Funding provided by investors to startups and small businesses that are believed to have long-term growth potential." data-te="దీర్ఘకాలిక వృద్ధి సామర్థ్యం ఉన్న స్టార్టప్‌లు మరియు చిన్న వ్యాపారాలకు ఇన్వెస్టర్లు అందించే పెట్టుబడి సాయం.">Funding provided by investors to startups and small businesses that are believed to have long-term growth potential.</p>
+                <button class="digest-action-btn" onclick="playAudioStory('glossary-1')" style="color: var(--color-primary);">
+                  <span data-en="🔊 Listen Pronunciation" data-te="🔊 ఉచ్చారణ వినండి">🔊 Listen Pronunciation</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- Most Watched Interviews -->
+        <section class="editorial-section">
+          <div class="section-header-row">
+            <h3 class="section-title" data-en="Most Watched Interviews" data-te="ఎక్కువ మంది వీక్షించిన ఇంటర్వ్యూలు">Most Watched Interviews</h3>
+            <span class="view-all-link" data-en="See All" data-te="అన్నీ చూడండి">See All</span>
+          </div>
+          
+          <div class="interviews-grid">
+            <div class="interview-card large-interview">
+              <div class="interview-image-container">
+                <img src="assets/interview_thumbnail.png" alt="Rajeev Nambiar Interview" class="interview-img">
+                <span class="duration-badge">18:45</span>
+                <button class="play-overlay-btn" onclick="playInterview('ceo-interview')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+              </div>
+              <div class="interview-content">
+                <span class="person-tag" onclick="toggleFollow('person', 'Rajeev Nambiar', this)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  Rajeev Nambiar (CEO, GlobeTech)
+                </span>
+                <h4 class="interview-title" data-en="EXCLUSIVE: Reimagining Indian IT - Global Strategies from Hyderabad" data-te="ఎక్స్‌క్లూజివ్: ఇండియన్ ఐటీ పునర్నిర్మాణం - హైదరాబాద్ నుండి అంతర్జాతీయ వ్యూహాలు">
+                  EXCLUSIVE: Reimagining Indian IT - Global Strategies from Hyderabad
+                </h4>
+                <p data-en="How GlobeTech scales operations in tier 2 and tier 3 cities of Andhra Pradesh and Telangana, hiring over 5,000 local developers." data-te="ఆంధ్రప్రదేశ్ మరియు తెలంగాణలోని టైర్ 2 మరియు టైర్ 3 నగరాల్లో గ్లోబ్‌టెక్ కార్యకలాపాలను ఎలా విస్తరిస్తోంది, మరియు 5,000 మందికి పైగా స్థానిక డెవలపర్‌లను ఎలా నియమించుకుంటోంది.">
+                  How GlobeTech scales operations in tier 2 and tier 3 cities of Andhra Pradesh and Telangana, hiring over 5,000 local developers.
+                </p>
+              </div>
+            </div>
+            
+            <!-- Small Interview list -->
+            <div class="interviews-side-list">
+              <div class="interview-list-item" onclick="playInterview('startup-interview')">
+                <div class="list-thumb">
+                  <div class="thumb-placeholder">PV</div>
+                </div>
+                <div class="list-content">
+                  <h5 data-en="Building a $50M Agritech Firm from Warangal" data-te="వరంగల్ నుండి $50M అగ్రిటెక్ సంస్థను నిర్మించడం">Building a $50M Agritech Firm from Warangal</h5>
+                  <span class="meta-tag">Priyanka Varma (12 mins)</span>
+                </div>
+              </div>
+              <div class="interview-list-item" onclick="playInterview('finance-interview')">
+                <div class="list-thumb">
+                  <div class="thumb-placeholder">KA</div>
+                </div>
+                <div class="list-content">
+                  <h5 data-en="The Future of Real Estate in Amaravati" data-te="అమరావతిలో రియల్ ఎస్టేట్ భవిష్యత్తు">The Future of Real Estate in Amaravati</h5>
+                  <span class="meta-tag">K. Anand Rao (15 mins)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- BTV Opportunity Feed (Jobs, Directory, Events) -->
+        <section class="editorial-section">
+          <div class="section-header-row">
+            <h3 class="section-title" data-en="BTV Opportunity Feed" data-te="BTV అవకాశాల ఫీడ్">BTV Opportunity Feed</h3>
+            <span class="category-info" data-en="Direct professional growth & utility" data-te="ప్రత్యక్ష వృత్తిపరమైన వృద్ధి & ప్రయోజనం">Direct professional growth & utility</span>
+          </div>
+
+          <div class="opportunity-banner">
+            <img src="assets/opportunity_cover.png" alt="Opportunities banner" class="opportunity-banner-img">
+            <div class="banner-gradient-overlay"></div>
+            <div class="banner-text-overlay">
+              <h4 data-en="Act on Daily Local Opportunities" data-te="రోజువారీ స్థానిక అవకాశాలను ఉపయోగించుకోండి">Act on Daily Local Opportunities</h4>
+              <p data-en="Jobs, business directories, and local professional events curated for you." data-te="మీ కోసం ప్రత్యేకంగా ఎంపిక చేసిన ఉద్యోగాలు, వ్యాపార మార్గదర్శకాలు మరియు స్థానిక వృత్తిపరమైన ఈవెంట్లు.">Jobs, business directories, and local professional events curated for you.</p>
+            </div>
+          </div>
+
+          <!-- Tabs for Desktop Opportunity Section -->
+          <div class="opp-tabs-container">
+            <div class="opp-tab-header">
+              <button class="opp-tab-btn active" onclick="switchOppTab('jobs', this)" data-en="Jobs & Business Leads" data-te="ఉద్యోగాలు & వ్యాపార అవకాశాలు">Jobs & Business Leads</button>
+              <button class="opp-tab-btn" onclick="switchOppTab('events', this)" data-en="Events Near Me" data-te="నాకు సమీపంలో ఉన్న ఈవెంట్లు">Events Near Me</button>
+              <button class="opp-tab-btn" onclick="switchOppTab('directory', this)" data-en="Business Directory" data-te="వ్యాపార మార్గదర్శి">Business Directory</button>
+            </div>
+
+            <!-- Opportunity Tabs Content -->
+            <div class="opp-tab-content active" id="opp-content-jobs">
+              <div class="opp-grid" id="desktop-jobs-grid">
+                <!-- Dynamic Content injected by JS -->
+              </div>
+            </div>
+            <div class="opp-tab-content" id="opp-content-events">
+              <div class="opp-grid" id="desktop-events-grid">
+                <!-- Dynamic Content injected by JS -->
+              </div>
+            </div>
+            <div class="opp-tab-content" id="opp-content-directory">
+              <div class="opp-grid" id="desktop-directory-grid">
+                <!-- Dynamic Content injected by JS -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Community Reporter & Submit Story Workflow -->
+        <section class="editorial-section reporter-section">
+          <div class="reporter-banner">
+            <div class="reporter-info">
+              <h3 data-en="Become a BTV Community Reporter" data-te="BTV కమ్యూనిటీ రిపోర్టర్ అవ్వండి">Become a BTV Community Reporter</h3>
+              <p data-en="Identify stories and business growth in your town. Submit news briefs or directory details directly. Verified entries get featured in the BTV Feed and earn community badges." data-te="మీ ఊరిలో ఉన్న వ్యాపారాలు, వృద్ధి కథనాలను గుర్తించండి. వార్తలను లేదా వ్యాపార వివరాలను నేరుగా సబ్మిట్ చేయండి. ధృవీకరించబడిన పోస్టులు BTV ఫీడ్‌లో ప్రచురించబడతాయి.">
+                Identify stories and business growth in your town. Submit news briefs or directory details directly. Verified entries get featured in the BTV Feed and earn community badges.
+              </p>
+            </div>
+
+            <!-- Submission Form -->
+            <form class="reporter-form" id="desktop-reporter-form" onsubmit="handleReporterSubmit(event, 'desktop')">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="rep-title" data-en="Story Title / Opportunity Headline" data-te="కథనం శీర్షిక / అవకాశం పేరు">Story Title / Opportunity Headline</label>
+                  <input type="text" id="rep-title" required placeholder="e.g. New textile cluster opening in Vijayawada">
+                </div>
+              </div>
+              <div class="form-row split">
+                <div class="form-group">
+                  <label for="rep-city" data-en="City / Location" data-te="నగరం / స్థలం">City / Location</label>
+                  <select id="rep-city">
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Vijayawada">Vijayawada</option>
+                    <option value="Visakhapatnam">Visakhapatnam</option>
+                    <option value="Tirupati">Tirupati</option>
+                    <option value="Warangal">Warangal</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="rep-type" data-en="Submission Type" data-te="సమర్పణ రకం">Submission Type</label>
+                  <select id="rep-type">
+                    <option value="story">Local News / Story</option>
+                    <option value="job">Job / Business opportunity</option>
+                    <option value="business">Directory Listing</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="rep-content" data-en="Story description (Keep under 150 words)" data-te="కథనం వివరణ (150 పదాల లోపు రాయండి)">Story description (Keep under 150 words)</label>
+                  <textarea id="rep-content" rows="3" required placeholder="Describe what is happening, who is succeeding, and what the details are..."></textarea>
+                </div>
+              </div>
+              <button type="submit" class="submit-story-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                <span data-en="Submit Story Brief" data-te="కథనాన్ని సబ్మిట్ చేయి">Submit Story Brief</span>
+              </button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: MOBILE APP SIMULATOR (Phone Device Frame) -->
+    <section class="mobile-simulator-view" id="mobile-simulator">
+      <div class="phone-frame-bezel">
+        <!-- Speaker / Notch -->
+        <div class="phone-notch"></div>
+        
+        <!-- Interactive Screen Container -->
+        <div class="phone-screen-container">
+          
+          <!-- Phone Status Bar -->
+          <div class="phone-status-bar">
+            <span class="status-time" id="simulator-time">09:41</span>
+            <div class="status-icons">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h.01M7 16h10M9 12h6M11 8h2M12 4h.01"/></svg> <!-- Wifi -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg> <!-- Battery -->
+            </div>
+          </div>
+
+          <!-- App Sub-Header inside simulator (Location & Language selection) -->
+          <header class="app-simulator-header">
+            <div class="app-logo" style="display: flex; align-items: center; gap: 4px;">
+              <img src="assets/logo.jpg" alt="BTV Logo" style="height: 24px; width: auto; object-fit: contain; border-radius: 3px; border: 1px solid var(--border-color);">
+            </div>
+            
+            <div class="header-action-row">
+              <!-- Location Trigger -->
+              <div class="app-location-picker">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+                <select id="mobile-city-selector" onchange="changeUserLocation(this.value)">
+                  <option value="Hyderabad">Hyderabad</option>
+                  <option value="Vijayawada">Vijayawada</option>
+                  <option value="Visakhapatnam">Vizag</option>
+                  <option value="Tirupati">Tirupati</option>
+                  <option value="Warangal">Warangal</option>
+                </select>
+              </div>
+
+              <!-- Telugu/English Pill Toggle -->
+              <button class="app-lang-toggle" onclick="toggleLanguage()">
+                <span class="active-lang" id="mobile-lang-pill">EN</span>
+              </button>
+
+              <!-- Portal Switch Toggle for Mobile Testing -->
+              <button class="app-lang-toggle mobile-only-toggle" onclick="switchAppMode(state.appMode === 'reader' ? 'newsroom' : 'reader')" title="Toggle Newsroom OS Portal" style="border-color: var(--color-primary); color: var(--color-primary); display: none;">
+                🔑
+              </button>
+            </div>
+          </header>
+
+          <!-- Main Scrollable App Viewport -->
+          <div class="app-viewport-content" id="app-viewport">
+            
+            <!-- TAB 1: HOME -->
+            <div class="app-tab-pane active" id="tab-home">
+              <!-- Morning 7 Digest banner card -->
+              <div class="mobile-digest-banner morning" onclick="openDigest('morning')">
+                <div class="banner-top">
+                  <span class="pulse-badge">NEW</span>
+                  <h4 data-en="Morning 7 digest is ready" data-te="మార్నింగ్ 7 డైజెస్ట్ సిద్ధంగా ఉంది">Morning 7 digest is ready</h4>
+                </div>
+                <p data-en="Get up to speed with today's 7 key business headlines in 1 minute." data-te="ఈరోజు 7 ముఖ్యమైన బిజినెస్ వార్తలను 1 నిమిషంలో చదవండి.">Get up to speed with today's 7 key business headlines in 1 minute.</p>
+                <div class="bulletins-indicator">
+                  <span>⚡ 7 bulletins</span>
+                </div>
+              </div>
+
+              <!-- Continue Watching -->
+              <div class="mobile-section">
+                <h3 class="mobile-sec-title" data-en="Continue Watching" data-te="వీక్షించడం కొనసాగించండి">Continue Watching</h3>
+                <div class="continue-watching-row">
+                  <div class="watch-thumb-card" onclick="playInterview('ceo-interview')">
+                    <div class="watch-img-container">
+                      <img src="assets/interview_thumbnail.png" alt="Rajeev Nambiar">
+                      <span class="progress-bar-fill" style="width: 60%"></span>
+                    </div>
+                    <span class="watch-title">CEO Rajeev Nambiar</span>
+                  </div>
+                  <div class="watch-thumb-card" onclick="playInterview('startup-interview')">
+                    <div class="watch-img-container">
+                      <div class="thumb-placeholder-mini">PV</div>
+                      <span class="progress-bar-fill" style="width: 20%"></span>
+                    </div>
+                    <span class="watch-title">Priyanka Varma (Agritech)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Daily Business Word of the Day Mobile -->
+              <div class="mobile-section" style="padding: 0 12px 10px;">
+                <div class="mobile-digest-banner" style="background: linear-gradient(135deg, rgba(0, 214, 185, 0.05) 0%, rgba(20,24,35,0.8) 100%); border-left: 4px solid var(--color-secondary); margin: 0; cursor: pointer; padding: 12px;" onclick="playAudioStory('glossary-1')">
+                  <div class="banner-top" style="justify-content: space-between; display: flex; align-items: center; margin-bottom: 6px;">
+                    <span class="pulse-badge" style="background-color: var(--color-secondary); color:#0c0e14; font-size:0.55rem; font-weight:800; padding:1px 4px; border-radius:3px;">LEARN</span>
+                    <span style="font-size: 0.6rem; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px;">DAILY GLOSSARY</span>
+                  </div>
+                  <h4 style="font-size:0.85rem; font-weight:800; color:var(--color-secondary); margin-bottom: 4px;" data-en="Venture Capital" data-te="సాహస పెట్టుబడి (Venture Capital)">Venture Capital</h4>
+                  <p style="font-size:0.7rem; color:var(--text-muted); line-height:1.4; margin-bottom: 6px;" data-en="Funding for high-growth startups." data-te="దీర్ఘకాలిక వృద్ధి సామర్థ్యం ఉన్న స్టార్టప్‌లకు పెట్టుబడి.">Funding for high-growth startups.</p>
+                  <div class="bulletins-indicator" style="color: var(--color-primary); font-size: 0.65rem; font-weight:700;">
+                    <span>🔊 Click to Listen Pronunciation</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recommended For You Feed (No infinite card grid, but structured highlights) -->
+              <div class="mobile-section">
+                <h3 class="mobile-sec-title" data-en="Recommended for You" data-te="మీ కోసం సిఫార్సు చేయబడినవి">Recommended for You</h3>
+                <div class="mobile-cards-container" id="home-rec-feed">
+                  <!-- Dynamic highlights injected here -->
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: SHORTS (Vertical swipe-based screen) -->
+            <div class="app-tab-pane" id="tab-shorts">
+              <!-- Scroll snap container -->
+              <div class="shorts-swipe-container" id="shorts-container" onscroll="handleShortsScroll()">
+                <!-- Dynamic cards injected here -->
+              </div>
+              <!-- Vertical Swipe Indicator -->
+              <div class="swipe-hint" id="shorts-swipe-hint">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="arrow-up-anim"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+                <span data-en="Swipe up for more" data-te="మరిన్ని వార్తల కోసం పైకి స్వైప్ చేయండి">Swipe up for more</span>
+              </div>
+            </div>
+
+            <!-- TAB 3: LIVE (Immersive player & Live Chat) -->
+            <div class="app-tab-pane" id="tab-live">
+              <div class="mobile-live-layout">
+                <!-- Video block -->
+                <div class="mobile-live-video" onclick="togglePlayLiveStream(this)">
+                  <div class="live-badge-overlay">LIVE</div>
+                  <div class="visuals-frame" id="mobile-live-visuals">
+                    <!-- Dynamic audio waves or particles -->
+                    <div class="pulse-ring"></div>
+                    <span class="live-stream-label">BTV NEWS STREAM</span>
+                  </div>
+                  <div class="video-play-hint">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <span data-en="Tap to Listen/Watch" data-te="వినడానికి/చూడడానికి నొక్కండి">Tap to Listen/Watch</span>
+                  </div>
+                </div>
+
+                <!-- Scrolling chat messages -->
+                <div class="mobile-live-chat" id="mobile-live-chat">
+                  <!-- JS appends comments here -->
+                </div>
+
+                <!-- Quick comment input -->
+                <div class="chat-input-bar">
+                  <input type="text" placeholder="Type a message..." id="mobile-chat-input" onkeydown="handleChatSubmit(event)">
+                  <button class="chat-send-btn" onclick="sendChatFromMobile()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 4: NEAR YOU (Location-based Feed & Business Directory) -->
+            <div class="app-tab-pane" id="tab-near-you">
+              <div class="near-you-header-box">
+                <span class="location-badge-text" id="near-you-city-name">Hyderabad</span>
+                <p data-en="Stories, Opportunities & Directory near you" data-te="మీకు సమీపంలోని వార్తలు, అవకాశాలు & వ్యాపారాలు">Stories, Opportunities & Directory near you</p>
+              </div>
+
+              <!-- Filter Selector for mobile Opps -->
+              <div class="near-you-chips">
+                <button class="chip active" onclick="filterNearYou('all', this)">All</button>
+                <button class="chip" onclick="filterNearYou('news', this)">News</button>
+                <button class="chip" onclick="filterNearYou('jobs', this)">Jobs</button>
+                <button class="chip" onclick="filterNearYou('business', this)">Business</button>
+              </div>
+
+              <div class="near-you-scrollable" id="near-you-content-feed">
+                <!-- Location based content injected dynamically -->
+              </div>
+            </div>
+
+            <!-- TAB 5: MY BTV (Personalized feed & profile tracker) -->
+            <div class="app-tab-pane" id="tab-my-btv">
+              <!-- Personalized Summary Header -->
+              <div class="my-btv-summary-header">
+                <div class="user-greeting">
+                  <h4 data-en="My BTV Feed" data-te="నా BTV ఫీడ్">My BTV Feed</h4>
+                  <p data-en="Based on your followed topics and reading history" data-te="మీరు అనుసరించిన టాపిక్‌లు మరియు రీడింగ్ హిస్టరీ ఆధారంగా">Based on your followed topics and reading history</p>
+                </div>
+              </div>
+
+              <!-- Followed tags info -->
+              <div class="followed-tags-section">
+                <span class="section-micro-title" data-en="FOLLOWING" data-te="మీరు అనుసరిస్తున్నవి">FOLLOWING</span>
+                <div class="followed-tags-row" id="my-btv-followed-chips">
+                  <!-- Following chips like "Startups", "Hyderabad", etc. -->
+                </div>
+              </div>
+
+              <hr class="view-divider">
+
+              <!-- My BTV Articles list -->
+              <div class="my-btv-articles-feed" id="my-btv-content-feed">
+                <!-- Personalised content list injected here -->
+              </div>
+
+              <!-- Saved Articles box -->
+              <div class="saved-articles-box">
+                <span class="section-micro-title" data-en="SAVED STORIES" data-te="సేవ్ చేసిన కథనాలు">SAVED STORIES</span>
+                <div class="saved-stories-list" id="my-btv-saved-list">
+                  <!-- Saved stories injected here -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Navigation Bar (One-Thumb Optimized) -->
+          <nav class="app-bottom-nav">
+            <button class="nav-item active" onclick="switchMobileTab('home', this)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span data-en="Home" data-te="హోమ్">Home</span>
+            </button>
+            <button class="nav-item" onclick="switchMobileTab('shorts', this)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              <span data-en="Shorts" data-te="షార్ట్స్">Shorts</span>
+            </button>
+            <button class="nav-item live-pulse-nav" onclick="switchMobileTab('live', this)">
+              <div class="pulse-outer"></div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+              <span data-en="Live" data-te="లైవ్">Live</span>
+            </button>
+            <button class="nav-item" onclick="switchMobileTab('near-you', this)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span data-en="Near You" data-te="సమీపంలో">Near You</span>
+            </button>
+            <button class="nav-item" onclick="switchMobileTab('my-btv', this)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span data-en="My BTV" data-te="మై BTV">My BTV</span>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================== VIEW 2: BTV NEWSROOM OS ======================== -->
+  <main class="newsroom-os-container hidden" id="newsroom-workspace">
+    <!-- Subheader with account switcher -->
+    <section class="newsroom-auth-bar">
+      <div class="user-profile-summary">
+        <div class="avatar" id="nr-user-avatar">SA</div>
+        <div>
+          <h4 id="nr-user-name">Super Admin</h4>
+          <span class="role-badge" id="nr-user-role">Super Admin / Central</span>
+        </div>
+      </div>
+
+      <!-- Simulated credentials switch dropdown -->
+      <div class="quick-login-switch">
+        <label for="role-switcher">Test Identity Selector:</label>
+        <select id="role-switcher" onchange="switchNrAccount(this.value)">
+          <option value="superadmin">Super Admin (Central Governance)</option>
+          <option value="editor">Chief Editor (State/National Escalate)</option>
+          <option value="admin_hyd">Hyderabad City Admin (Telangana)</option>
+          <option value="admin_vsk">Visakhapatnam City Admin (Andhra Pradesh)</option>
+          <option value="reporter_hyd">Hyderabad Reporter (BTV-HYD-R-0042)</option>
+          <option value="reporter_vsk">Visakhapatnam Reporter (BTV-VSK-R-0018)</option>
+          <option value="contributor">Occasional Contributor (Public Submission)</option>
+        </select>
+        <button class="btn-secondary" onclick="switchAppMode('reader')" style="padding: 0.35rem 0.75rem; font-size: 0.75rem; border-color: var(--color-primary); color: var(--color-primary); margin-left: 10px;">
+          ← Exit
+        </button>
+      </div>
+    </section>
+
+    <!-- CONTENT PORTAL CONTAINER -->
+    <div class="newsroom-dynamic-viewport" id="newsroom-content-pane">
+      
+      <!-- SUB-VIEW A: REPORTER PORTAL -->
+      <section class="reporter-portal hidden" id="view-reporter-portal">
+        <div class="portal-grid">
+          <!-- Reporter Details & Stats -->
+          <div class="reporter-stats-sidebar">
+            <div class="rep-card">
+              <span class="card-icon">🆔</span>
+              <h3 id="rep-profile-id">BTV-HYD-R-0042</h3>
+              <p class="rep-scope-lbl">Geographic Assignment Scope:</p>
+              <p class="rep-scope-val" id="rep-profile-scope">Hyderabad City, TG, India</p>
+            </div>
+            
+            <div class="rep-kpi-grid">
+              <div class="kpi-box">
+                <span class="kpi-num" id="rep-kpi-total">14</span>
+                <span class="kpi-lbl">Total Submitted</span>
+              </div>
+              <div class="kpi-box">
+                <span class="kpi-num text-success" id="rep-kpi-published">11</span>
+                <span class="kpi-lbl">Published</span>
+              </div>
+              <div class="kpi-box">
+                <span class="kpi-num text-warning" id="rep-kpi-changes">2</span>
+                <span class="kpi-lbl">Pending Review</span>
+              </div>
+              <div class="kpi-box">
+                <span class="kpi-num text-danger" id="rep-kpi-correction">0%</span>
+                <span class="kpi-lbl">Correction Rate</span>
+              </div>
+            </div>
+
+            <!-- Story Assignments Box -->
+            <div class="reporter-assignments-card">
+              <h4>Direct Story Assignments</h4>
+              <div class="assignments-list" id="reporter-assignments-list">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Create Content Panel -->
+          <div class="reporter-creation-panel">
+            <div class="panel-header">
+              <h3>BTV Mobile-First Field Reporting Form</h3>
+              <span class="draft-indicator" id="draft-autosave-indicator">Saved locally (Autosave active)</span>
+            </div>
+
+            <form class="field-reporting-form" id="reporting-form" onsubmit="handleFieldReportSubmit(event)">
+              <div class="form-row split">
+                <div class="form-group">
+                  <label for="field-headline">Editorial Headline (Required)</label>
+                  <input type="text" id="field-headline" required placeholder="e.g. Hyderabad Fintech startup raises $20M Series A" oninput="triggerAutosave()">
+                </div>
+                <div class="form-group">
+                  <label for="field-short-headline">Short Headline (Shorts/Ticker)</label>
+                  <input type="text" id="field-short-headline" placeholder="e.g. Hyderabad Fintech Raises $20M" oninput="triggerAutosave()">
+                </div>
+              </div>
+
+              <div class="form-row split">
+                <div class="form-group">
+                  <label for="field-type">Content Type</label>
+                  <select id="field-type" onchange="adjustFormFields(this.value)">
+                    <option value="story">Full Article / News Story</option>
+                    <option value="short">BTV Short (60-100 words)</option>
+                    <option value="job">Opportunity / Job Listing</option>
+                    <option value="event">Local Professional Event</option>
+                    <option value="directory">Business Directory Profile</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="field-category">Primary Category</label>
+                  <select id="field-category">
+                    <option value="Startups">Startups</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Real Estate">Real Estate</option>
+                    <option value="Finance & Stock Market">Finance & Stock Market</option>
+                    <option value="Career & Jobs">Career & Jobs</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Geographical Scope (Self-Detecting/Pre-Filled) -->
+              <div class="form-row geo-scope-row">
+                <div class="form-group">
+                  <label>Assigned State</label>
+                  <input type="text" id="field-state" readonly class="readonly-input" value="Telangana">
+                </div>
+                <div class="form-group">
+                  <label>Assigned District</label>
+                  <input type="text" id="field-district" readonly class="readonly-input" value="Hyderabad District">
+                </div>
+                <div class="form-group">
+                  <label>City / Coverage Zone</label>
+                  <input type="text" id="field-city" readonly class="readonly-input" value="Hyderabad">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="field-summary">Short Summary / Brief</label>
+                  <input type="text" id="field-summary" required placeholder="Write a 1-sentence summary of the story detail" oninput="triggerAutosave()">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="field-content">Full Story Body / Detailed Description</label>
+                  <textarea id="field-content" rows="6" required placeholder="Write the main story. Telugu font is fully supported here..." oninput="triggerAutosave()"></textarea>
+                </div>
+              </div>
+
+              <!-- Field media simulator -->
+              <div class="form-row media-uploader-box">
+                <div class="form-group">
+                  <label>Supporting Media Attachments (Field Camera/Gallery)</label>
+                  <div class="upload-simulation-controls">
+                    <button type="button" class="media-btn" onclick="simulateMediaUpload('image')">📸 Capture Image</button>
+                    <button type="button" class="media-btn" onclick="simulateMediaUpload('video')">📹 Attach Video</button>
+                    <button type="button" class="media-btn" onclick="simulateMediaUpload('audio')">🎙 Record Audio Note</button>
+                    
+                    <label class="checkbox-container">
+                      <input type="checkbox" id="field-compress-media" checked> Compress Media First
+                    </label>
+                    <label class="checkbox-container">
+                      <input type="checkbox" id="field-weak-network"> Simulate Weak Network
+                    </label>
+                  </div>
+
+                  <!-- Upload progress bar -->
+                  <div class="upload-progress-container hidden" id="media-upload-bar">
+                    <div class="progress-info">
+                      <span id="upload-status-txt">Uploading story cover image...</span>
+                      <span id="upload-percentage">45%</span>
+                    </div>
+                    <div class="progress-track">
+                      <div class="progress-fill" id="upload-progress-fill" style="width: 45%"></div>
+                    </div>
+                    <!-- Weak Network alert -->
+                    <div class="weak-network-alert hidden" id="upload-network-alert">
+                      <span>⚠️ Connection unstable. Upload paused.</span>
+                      <button type="button" class="retry-upload-btn" onclick="recoverMediaUpload()">Force Retry Upload</button>
+                    </div>
+                  </div>
+                  
+                  <div class="uploaded-files-list" id="media-attachment-list">
+                    <!-- Dynamic file names added here -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Source & Internal Verification Details -->
+              <div class="form-row verification-details-card">
+                <h4>Internal Verification & Source Rating (Strict Editorial Policy)</h4>
+                
+                <div class="split-3-cols">
+                  <div class="form-group">
+                    <label for="field-source-type">Source Type</label>
+                    <select id="field-source-type">
+                      <option value="First-hand reporting">First-hand reporting</option>
+                      <option value="Official press release">Official press release</option>
+                      <option value="Government representative">Government representative</option>
+                      <option value="Company spokesperson">Company spokesperson</option>
+                      <option value="Eyewitness statement">Eyewitness statement</option>
+                      <option value="Public document / Report">Public document / Report</option>
+                      <option value="Social media claim">Social media claim</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="field-source-verify">Verification Status</label>
+                    <select id="field-source-verify">
+                      <option value="Verified">Fully Verified (Double Checked)</option>
+                      <option value="Partially Verified">Partially Verified (Single source)</option>
+                      <option value="Verification Pending">Verification Pending (Awaiting statement)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="field-urgency">Review Priority SLA</label>
+                    <select id="field-urgency">
+                      <option value="P2">Standard Review (SLA: 2 hours)</option>
+                      <option value="P1">Urgent Review (SLA: 15 minutes)</option>
+                      <option value="P0">Breaking Request (SLA: 5 minutes)</option>
+                      <option value="P3">Feature / Legacy Piece (SLA: 24 hours)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row" style="margin-top: 0.5rem;">
+                  <div class="form-group">
+                    <label for="field-source-evidence">Evidence / Internal Reference Notes</label>
+                    <input type="text" id="field-source-evidence" placeholder="e.g. Interview recording attachment, official company email reference...">
+                  </div>
+                </div>
+
+                <div class="form-row" style="margin-top: 0.5rem;">
+                  <div class="form-group">
+                    <label for="field-editor-notes">Reporter Notes to assigned Editor</label>
+                    <input type="text" id="field-editor-notes" placeholder="e.g. Urgent interview confirmation needed. Contact info attached.">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="form-actions-row">
+                <button type="button" class="btn-check-dup" onclick="handleDuplicateCheck()">
+                  🔍 Run Duplicate Story Detection
+                </button>
+                <div class="actions-right">
+                  <button type="button" class="btn-secondary" onclick="saveReportingDraft()">Save Draft</button>
+                  <button type="submit" class="btn-primary">Submit for Editorial Review</button>
+                </div>
+              </div>
+
+              <!-- Duplicate alert popup inside form -->
+              <div class="duplicate-check-results-card hidden" id="duplicate-warning-box">
+                <div class="dup-header">
+                  <span class="dup-warn-icon">⚠️</span>
+                  <h4 data-en="POSSIBLE DUPLICATE STORY DETECTED" data-te="నకిలీ కథనం గుర్తించబడింది">POSSIBLE DUPLICATE STORY DETECTED</h4>
+                </div>
+                <p class="dup-explain">The following matches exist in the BTV database for this city/topic:</p>
+                <div class="dup-matches-list" id="dup-matches-items">
+                  <!-- Injected via JS -->
+                </div>
+                <div class="dup-actions">
+                  <span class="dup-note">Super Admin / Editorial permissions required to merge or overwrite.</span>
+                  <button type="button" class="dup-ignore-btn" onclick="dismissDuplicateWarning()">Proceed Separately</button>
+                </div>
+              </div>
+            </form>
+
+            <hr class="view-divider">
+
+            <!-- Submission History Table -->
+            <div class="reporter-history-table-container">
+              <h3>Submission & Editorial Status History</h3>
+              <table class="newsroom-table">
+                <thead>
+                  <tr>
+                    <th>Story ID</th>
+                    <th>Headline</th>
+                    <th>Category</th>
+                    <th>Type</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Last Updated</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="reporter-submissions-table">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUB-VIEW B: ADMIN REVIEW CONSOLE (Three-Panel Layout) -->
+      <section class="admin-review-console hidden" id="view-admin-console">
+        <div class="three-panel-layout">
+          
+          <!-- LEFT PANEL: Submissions Queue -->
+          <div class="panel-left queue-panel">
+            <div class="panel-title-row">
+              <h3>Editorial Queue</h3>
+              <span class="badge" id="queue-pending-count">0 New</span>
+            </div>
+            
+            <!-- Filters -->
+            <div class="queue-filters-box">
+              <input type="text" placeholder="Search headline..." id="queue-search" oninput="filterQueueList()">
+              <div class="queue-filters-row">
+                <select id="queue-priority-filter" onchange="filterQueueList()">
+                  <option value="all">All Priorities</option>
+                  <option value="P0">P0 — Breaking</option>
+                  <option value="P1">P1 — Urgent</option>
+                  <option value="P2">P2 — Standard</option>
+                </select>
+                <select id="queue-city-filter" onchange="filterQueueList()">
+                  <option value="all">All Locations</option>
+                  <!-- Cities populated via JS -->
+                </select>
+              </div>
+            </div>
+
+            <!-- Scrollable list of pending reviews -->
+            <div class="queue-items-container" id="admin-queue-list">
+              <!-- Cards injected via JS -->
+            </div>
+          </div>
+
+          <!-- CENTER PANEL: Content Preview / Version Editor -->
+          <div class="panel-center preview-panel">
+            <div class="preview-tabs">
+              <button class="preview-tab-btn active" id="btn-tab-preview" onclick="switchPreviewTab('preview')">Public Preview</button>
+              <button class="preview-tab-btn" id="btn-tab-compare" onclick="switchPreviewTab('compare')">Compare Versions (Visual Diff)</button>
+              <button class="preview-tab-btn" id="btn-tab-edit" onclick="switchPreviewTab('edit')">Correction Editor</button>
+            </div>
+
+            <!-- TAB 1: Live Mock Preview -->
+            <div class="preview-tab-pane active" id="pane-preview">
+              <div class="editorial-preview-card">
+                <div class="preview-label">BTV LIVE PUBLISHED PREVIEW MOCKUP</div>
+                <div class="preview-body">
+                  <span class="prev-cat" id="prev-display-category">STARTUPS</span>
+                  <h2 class="prev-title" id="prev-display-title">Headline of the article</h2>
+                  <div class="prev-byline">
+                    <span id="prev-display-author">Reported by: BTV Reporter</span>
+                    <span id="prev-display-location">Location: Hyderabad</span>
+                    <span id="prev-display-date">July 5, 2026</span>
+                  </div>
+                  <hr class="prev-hr">
+                  <p class="prev-summary" id="prev-display-summary">Short description</p>
+                  <div class="prev-main-content" id="prev-display-content">
+                    Full body content.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: Version comparison side-by-side diff -->
+            <div class="preview-tab-pane" id="pane-compare">
+              <div class="diff-header-row">
+                <div class="diff-header-col">Reporter Original Draft</div>
+                <div class="diff-header-col">Admin Edited Version</div>
+              </div>
+              <div class="diff-side-by-side-container">
+                <div class="diff-pane original" id="diff-pane-original">
+                  <!-- Original content -->
+                </div>
+                <div class="diff-pane edited" id="diff-pane-edited">
+                  <!-- Edited content with diff markup -->
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 3: Inline correction editor -->
+            <div class="preview-tab-pane" id="pane-edit">
+              <div class="admin-edit-form">
+                <h4>Correct headlines and texts directly</h4>
+                <div class="form-group">
+                  <label for="admin-edit-title">Correction Title</label>
+                  <input type="text" id="admin-edit-title" oninput="updateAdminChanges()">
+                </div>
+                <div class="form-group">
+                  <label for="admin-edit-summary">Correction Summary</label>
+                  <input type="text" id="admin-edit-summary" oninput="updateAdminChanges()">
+                </div>
+                <div class="form-group">
+                  <label for="admin-edit-content">Correction Body Text</label>
+                  <textarea id="admin-edit-content" rows="12" oninput="updateAdminChanges()"></textarea>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT PANEL: Editorial controls, SLA, comments -->
+          <div class="panel-right controls-panel" id="admin-controls-panel">
+            <!-- Details of submission -->
+            <div class="control-section submission-meta-box">
+              <h4>Submission Details</h4>
+              <div class="meta-item">
+                <span>Reporter ID:</span>
+                <strong id="ctrl-rep-id">BTV-HYD-R-0042</strong>
+              </div>
+              <div class="meta-item">
+                <span>Reporter Trust Index:</span>
+                <span class="trust-badge high" id="ctrl-rep-trust">98% High Accuracy</span>
+              </div>
+              <div class="meta-item">
+                <span>Submitted Time:</span>
+                <span id="ctrl-submit-time">July 5, 2026, 08:30</span>
+              </div>
+              <div class="meta-item">
+                <span>Content Risk Rating:</span>
+                <span class="risk-badge low" id="ctrl-risk-lvl">Normal Local (Low Risk)</span>
+              </div>
+              <div class="meta-item">
+                <span>Verification Rating:</span>
+                <span class="verification-badge status-success" id="ctrl-source-verify">First-hand (Verified)</span>
+              </div>
+            </div>
+
+            <!-- Content Locking status -->
+            <div class="control-section lock-status-box" id="editor-lock-banner">
+              <div class="lock-indicator">
+                <span class="lock-icon">🔒</span>
+                <span><strong>LOCKED:</strong> Under active editorial review by Hyderabad Admin</span>
+              </div>
+              <button class="override-lock-btn" onclick="overrideEditorialLock()">Override Lock</button>
+            </div>
+
+            <!-- SLA Timer -->
+            <div class="control-section sla-counter-box" id="ctrl-sla-box">
+              <h4>Review SLA Timeline Clock</h4>
+              <div class="sla-clock-timer">
+                <span class="sla-timer-label">TIME REMAINING:</span>
+                <span class="sla-timer-clock text-warning" id="ctrl-sla-time">01:45:22</span>
+              </div>
+              <p class="sla-policy-lbl">Standard Local (P2) Review Target: 2 hours</p>
+            </div>
+
+            <!-- Action controls -->
+            <div class="control-section operations-box">
+              <h4>Editorial Operations</h4>
+              <div class="ops-buttons-grid">
+                <button class="ops-btn approve" onclick="handleAdminAction('approve')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  Approve & Publish Story
+                </button>
+                <button class="ops-btn changes" onclick="handleAdminAction('request_changes')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"/></svg>
+                  Request Corrections (Changes)
+                </button>
+                <button class="ops-btn escalate" onclick="handleAdminAction('escalate')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+                  Escalate to Chief Editor
+                </button>
+                <button class="ops-btn reject" onclick="handleAdminAction('reject')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                  Reject & Drop Submission
+                </button>
+              </div>
+            </div>
+
+            <!-- Internal comments section -->
+            <div class="control-section comments-box">
+              <h4>Internal Editorial Comments Thread</h4>
+              <div class="internal-comments-thread" id="ctrl-comments-thread">
+                <!-- Log entries added dynamically -->
+              </div>
+              <div class="send-comment-row">
+                <input type="text" placeholder="Write internal correction instructions..." id="ctrl-comment-input">
+                <button class="send-comment-btn" onclick="sendEditorialComment()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
+      <!-- SUB-VIEW C: SUPER ADMIN COMMAND CENTER -->
+      <section class="super-admin-command-center hidden" id="view-command-center">
+        <div class="command-grid">
+          <!-- Main Command Center Header Stats -->
+          <div class="kpi-banner-row">
+            <div class="command-kpi">
+              <span class="cmd-num" id="cmd-stat-states">2</span>
+              <span class="cmd-lbl">Active States</span>
+            </div>
+            <div class="command-kpi">
+              <span class="cmd-num" id="cmd-stat-cities">5</span>
+              <span class="cmd-lbl">Active Newsrooms</span>
+            </div>
+            <div class="command-kpi">
+              <span class="cmd-num" id="cmd-stat-reporters">18</span>
+              <span class="cmd-lbl">Field Reporters</span>
+            </div>
+            <div class="command-kpi">
+              <span class="cmd-num" id="cmd-stat-submissions">48</span>
+              <span class="cmd-lbl">Submissions Today</span>
+            </div>
+            <div class="command-kpi text-warning">
+              <span class="cmd-num" id="cmd-stat-pending">3</span>
+              <span class="cmd-lbl">Pending Review</span>
+            </div>
+            <div class="command-kpi text-danger">
+              <span class="cmd-num" id="cmd-stat-sla">0</span>
+              <span class="cmd-lbl">SLA Violations</span>
+            </div>
+          </div>
+
+          <!-- Bottom Columns -->
+          <div class="command-bottom-row">
+            <!-- Left Side: Interactive Geographic Tree Drill-Down -->
+            <div class="geographic-tree-card">
+              <h3>Geographic Newsroom Org Hierarchy</h3>
+              <p class="section-desc">Drill down from national governance levels to individual reporter assignments.</p>
+              
+              <div class="org-tree-root">
+                <div class="tree-node country active">
+                  <span class="tree-toggle">▼</span> <strong>🇮🇳 BTV LIVE India (National)</strong>
+                  
+                  <div class="tree-branch" id="tree-branch-national">
+                    <!-- Telangana State Node -->
+                    <div class="tree-node state">
+                      <span class="tree-toggle">▼</span> <strong>Telangana (State Newsroom)</strong>
+                      <span class="admin-note">Admin: BTV-TG-A-0003</span>
+                      
+                      <div class="tree-branch">
+                        <!-- Hyderabad City Node -->
+                        <div class="tree-node city">
+                          <span class="tree-toggle">▼</span> <strong>Hyderabad District</strong> (Hyderabad City Newsroom)
+                          <div class="tree-branch">
+                            <div class="tree-leaf reporter" onclick="showReporterDetailsModal('reporter_hyd')">
+                              👨‍💻 <strong>Reporter: BTV-HYD-R-0042</strong> (Krishna M. — Active)
+                            </div>
+                            <div class="tree-leaf reporter">
+                              👨‍💻 <strong>Reporter: BTV-HYD-R-0043</strong> (Latha S. — Active)
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Warangal Node -->
+                        <div class="tree-node city">
+                          <span class="tree-toggle">▶</span> <strong>Warangal District</strong> (Warangal Newsroom)
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Andhra Pradesh State Node -->
+                    <div class="tree-node state">
+                      <span class="tree-toggle">▼</span> <strong>Andhra Pradesh (State Newsroom)</strong>
+                      <span class="admin-note">Admin: BTV-AP-A-0002</span>
+                      
+                      <div class="tree-branch">
+                        <!-- Vizag City Node -->
+                        <div class="tree-node city">
+                          <span class="tree-toggle">▼</span> <strong>Visakhapatnam District</strong> (Vizag Newsroom)
+                          <div class="tree-branch">
+                            <div class="tree-leaf reporter" onclick="showReporterDetailsModal('reporter_vsk')">
+                              👨‍💻 <strong>Reporter: BTV-VSK-R-0018</strong> (Rama Devi S. — Active)
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Vijayawada Node -->
+                        <div class="tree-node city">
+                          <span class="tree-toggle">▶</span> <strong>Vijayawada District</strong> (Vijayawada Newsroom)
+                        </div>
+                        <!-- Tirupati Node -->
+                        <div class="tree-node city">
+                          <span class="tree-toggle">▶</span> <strong>Tirupati District</strong> (Tirupati Newsroom)
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: User management controller -->
+            <div class="user-management-card">
+              <h3>BTV Newsroom Personnel & Accounts</h3>
+              <div class="user-action-header">
+                <button class="btn-primary-mini" onclick="openCreateUserDialog()">+ Create Newsroom Account</button>
+              </div>
+
+              <div class="user-list-table-container">
+                <table class="newsroom-table compact">
+                  <thead>
+                    <tr>
+                      <th>Account ID</th>
+                      <th>Name</th>
+                      <th>Assigned Scope</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="superadmin-user-table-body">
+                    <!-- Injected via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUB-VIEW D: AUDIT LOGS (Immutable list viewer) -->
+      <section class="audit-logs-view hidden" id="view-audit-logs">
+        <div class="audit-logs-card">
+          <div class="panel-header">
+            <h3>BTV Corporate Newsroom Audit Ledger (Immutable Logs)</h3>
+            <span class="security-policy-badge">📜 Compliance Log Lock Active</span>
+          </div>
+          <p class="section-desc">Every action including state transitions, credential logins, and edits is locked here. Deletions are forbidden by database design.</p>
+          
+          <div class="audit-table-filters">
+            <input type="text" placeholder="Filter by User ID or Action..." id="audit-filter-input" oninput="filterAuditLogsTable()">
+            <select id="audit-role-filter" onchange="filterAuditLogsTable()">
+              <option value="all">All Roles</option>
+              <option value="Super Admin">Super Admin</option>
+              <option value="City Admin">City Admin</option>
+              <option value="Reporter">Reporter</option>
+            </select>
+          </div>
+
+          <div class="audit-table-wrapper">
+            <table class="newsroom-table audit">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Actor ID</th>
+                  <th>Actor Role</th>
+                  <th>Action performed</th>
+                  <th>Modified Entity</th>
+                  <th>Previous State</th>
+                  <th>New State</th>
+                  <th>Device / IP</th>
+                </tr>
+              </thead>
+              <tbody id="audit-logs-table-body">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUB-VIEW E: 403 FORBIDDEN WARNING SCREEN -->
+      <section class="forbidden-warning-screen hidden" id="view-forbidden-access">
+        <div class="forbidden-dialog-box">
+          <div class="warn-shield-icon">🛡️</div>
+          <h2>403 - FORBIDDEN NEWSROOM GEOGRAPHIC OVERREACH</h2>
+          <p class="warn-details">Your user credentials do not authorize access to this district's local newsroom queue or unpublished stories database.</p>
+          <div class="warn-log-audit">
+            <span><strong>ACTION LOGGED IN LEDGER:</strong></span>
+            <span id="forbidden-logged-text">Unauthorized Hyderabad Admin access request to Visakhapatnam submission queue blocked.</span>
+          </div>
+          <button class="back-to-portal-btn" onclick="recoverFrom403()">Return to Authorized Portal</button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Newsroom bottom tab indicators (Super Admin, Editor and Admins see this) -->
+    <nav class="newsroom-bottom-nav" id="newsroom-tabs-nav">
+      <button class="nr-nav-item active" id="nr-nav-reporter" onclick="switchNewsroomTab('reporter')">
+        <span>Reporter Portal</span>
+      </button>
+      <button class="nr-nav-item" id="nr-nav-admin" onclick="switchNewsroomTab('admin')">
+        <span>Editorial Approval Console</span>
+      </button>
+      <button class="nr-nav-item" id="nr-nav-command" onclick="switchNewsroomTab('command')">
+        <span>National Command Center</span>
+      </button>
+      <button class="nr-nav-item" id="nr-nav-audit" onclick="switchNewsroomTab('audit')">
+        <span>Immutable Audit Ledger</span>
+      </button>
+    </nav>
+  </main>
+
+  <!-- ======================== OTHER DIALOG MODALS & OVERLAYS ======================== -->
+
+  <!-- NARRATION FLOATING AUDIO PLAYER DOCK (Global Viewport Player) -->
+  <div class="narration-player-dock hidden" id="audio-player-dock">
+    <div class="player-content-wrapper">
+      <div class="player-story-details">
+        <div class="sound-wave-anim">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div>
+          <span class="player-label" data-en="LISTENING TO STORY" data-te="వ్యాఖ్యాత చదువుతున్నారు">LISTENING TO STORY</span>
+          <h5 id="player-story-title">Hyderabad Tech Ecosystem Surges...</h5>
+        </div>
+      </div>
+      
+      <!-- Player Controls -->
+      <div class="player-controls">
+        <button class="ctrl-btn" onclick="adjustTTSPlaybackSpeed()" id="tts-speed-btn" title="Change speed">1.0x</button>
+        <button class="ctrl-btn play-pause-btn" onclick="togglePauseTTS()" id="tts-play-pause-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="play-pause-icon"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+        <button class="ctrl-btn close-player-btn" onclick="stopTTS()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESSIVE ONBOARDING DIALOGS (Using HTML5 native <dialog>) -->
+  
+  <!-- Step 1: Language preference (Modal on 1st visit) -->
+  <dialog class="onboarding-modal" id="dialog-language">
+    <div class="modal-body">
+      <h3>Choose your language / మీ భాషను ఎంచుకోండి</h3>
+      <p>Select your language to customize your BTV Live business news feed.</p>
+      <div class="selection-grid">
+        <button class="select-btn en" onclick="setOnboardingLanguage('en')">
+          <span class="lang-title">English</span>
+          <span class="lang-subtitle">Business News & Updates</span>
+        </button>
+        <button class="select-btn te" onclick="setOnboardingLanguage('te')">
+          <span class="lang-title">తెలుగు</span>
+          <span class="lang-subtitle">వ్యాపార వార్తలు & విశ్లేషణ</span>
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Step 2: Location selection (Triggered after 1st click/read engagement) -->
+  <dialog class="onboarding-modal" id="dialog-location">
+    <div class="modal-body">
+      <h3 data-en="Select your City / District" data-te="మీ నగరం / జిల్లాను ఎంచుకోండి">Select your City / District</h3>
+      <p data-en="BTV LIVE delivers hyperlocal business leads, events, and trending news in your area." data-te="మీ ఏరియాలోని స్థానిక వ్యాపార ఈవెంట్లు, అవకాశాలు మరియు వార్తలను పొందడానికి మీ ప్రాంతాన్ని ఎంచుకోండి.">BTV LIVE delivers hyperlocal business leads, events, and trending news in your area.</p>
+      <div class="location-grid-selection">
+        <button class="loc-select-btn" onclick="setOnboardingLocation('Hyderabad')">Hyderabad</button>
+        <button class="loc-select-btn" onclick="setOnboardingLocation('Vijayawada')">Vijayawada</button>
+        <button class="loc-select-btn" onclick="setOnboardingLocation('Visakhapatnam')">Visakhapatnam</button>
+        <button class="loc-select-btn" onclick="setOnboardingLocation('Tirupati')">Tirupati</button>
+        <button class="loc-select-btn" onclick="setOnboardingLocation('Warangal')">Warangal</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Step 3: Interests selection (Triggered after 2nd read engagement) -->
+  <dialog class="onboarding-modal" id="dialog-interests">
+    <div class="modal-body">
+      <h3 data-en="Customize your Interests" data-te="మీ ఆసక్తులను ఎంచుకోండి">Customize your Interests</h3>
+      <p data-en="Follow topics to personalize your My BTV feed." data-te="మీ మై BTV ఫీడ్‌ను అనుకూలీకరించడానికి టాపిక్‌లను ఎంచుకోండి.">Follow topics to personalize your My BTV feed.</p>
+      <div class="interests-tags-grid">
+        <button class="interest-chip" onclick="toggleInterestSelection('Startups', this)">Startups</button>
+        <button class="interest-chip" onclick="toggleInterestSelection('Real Estate', this)">Real Estate</button>
+        <button class="interest-chip" onclick="toggleInterestSelection('Agriculture', this)">Agriculture</button>
+        <button class="interest-chip" onclick="toggleInterestSelection('Technology', this)">Technology</button>
+        <button class="interest-chip" onclick="toggleInterestSelection('Finance & Stock Market', this)">Finance & Stocks</button>
+        <button class="interest-chip" onclick="toggleInterestSelection('Career & Jobs', this)">Career & Jobs</button>
+      </div>
+      <button class="confirm-interests-btn" onclick="confirmOnboardingInterests()" data-en="Confirm & Create My Feed" data-te="ధృవీకరించి, ఫీడ్‌ను సృష్టించండి">Confirm & Create My Feed</button>
+    </div>
+  </dialog>
+
+  <!-- Account creation prompt (Triggered when trying to Save, Follow, or Submit without account) -->
+  <dialog class="onboarding-modal" id="dialog-auth">
+    <div class="modal-body">
+      <div class="modal-badge-icon">🔐</div>
+      <h3 data-en="Save, Follow & Personalize" data-te="సేవ్ చేయండి, ఫాలో అవ్వండి & బదిలీ చేసుకోండి">Save, Follow & Personalize</h3>
+      <p data-en="Create a free BTV account to save articles, follow business leaders, track opportunities, and sync your personalized feed across all devices." data-te="వ్యాసాలను సేవ్ చేయడానికి, వ్యాపార నాయకులను అనుసరించడానికి, మీ వ్యక్తిగతీకరించిన ఫీడ్‌ను సమకాలీకరించడానికి ఉచిత BTV ఖాతాను సృష్టించండి.">Create a free BTV account to save articles, follow business leaders, track opportunities, and sync your personalized feed across all devices.</p>
+      
+      <form class="auth-modal-form" onsubmit="handleDemoSignup(event)">
+        <div class="form-group">
+          <label for="auth-email">Email Address</label>
+          <input type="email" id="auth-email" required placeholder="name@company.com">
+        </div>
+        <div class="form-group">
+          <label for="auth-phone">Mobile Number (For WhatsApp Updates)</label>
+          <input type="tel" id="auth-phone" placeholder="+91 XXXXX XXXXX">
+        </div>
+        <button type="submit" class="auth-submit-btn" data-en="Create Free Account" data-te="ఉచిత ఖాతాను సృష్టించండి">Create Free Account</button>
+      </form>
+      
+      <button class="auth-cancel-btn" onclick="closeAuthModal()" data-en="Continue Browsing Without Sync" data-te="ఖాతా లేకుండా చదవడం కొనసాగించండి">Continue Browsing Without Sync</button>
+    </div>
+  </dialog>
+
+  <!-- Super Admin Account Creator Overlay Dialog -->
+  <dialog class="onboarding-modal" id="dialog-create-user">
+    <div class="modal-body" style="text-align: left;">
+      <h3>Create New BTV Newsroom Account</h3>
+      <form class="auth-modal-form" onsubmit="handleSuperadminCreateUser(event)">
+        <div class="form-group">
+          <label for="new-user-name">Full Name</label>
+          <input type="text" id="new-user-name" required placeholder="e.g. Anand Rao">
+        </div>
+        
+        <div class="form-row split" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="form-group">
+            <label for="new-user-role">Assigned Role</label>
+            <select id="new-user-role" onchange="adjustScopeSelectorsInUserCreation(this.value)">
+              <option value="Reporter">Field Reporter</option>
+              <option value="Senior Reporter">Senior Reporter</option>
+              <option value="City Admin">City / District Admin</option>
+              <option value="State Admin">State Admin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="new-user-state">State Scope</label>
+            <select id="new-user-state" onchange="adjustCitiesInUserCreation(this.value)">
+              <option value="Telangana">Telangana</option>
+              <option value="Andhra Pradesh">Andhra Pradesh</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" id="new-user-city-wrapper">
+          <label for="new-user-city">Assigned City Newsroom</label>
+          <select id="new-user-city">
+            <option value="Hyderabad">Hyderabad</option>
+            <option value="Warangal">Warangal</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="new-user-email">Login Email ID</label>
+          <input type="email" id="new-user-email" required placeholder="name@btv.com">
+        </div>
+
+        <div class="form-row" style="display: flex; gap: 10px; margin-top: 10px; justify-content: flex-end;">
+          <button type="button" class="auth-cancel-btn" style="text-decoration:none; padding: 0.5rem 1rem; background-color: rgba(255,255,255,0.05); border-radius: 6px; color:#fff;" onclick="closeDialog('dialog-create-user')">Cancel</button>
+          <button type="submit" class="auth-submit-btn" style="margin-top:0; padding: 0.5rem 1.2rem;">Create Account</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- WhatsApp Subscription Confirmation Banner (Mock Alert) -->
+  <div class="toast-notification hidden" id="whatsapp-toast">
+    <div class="toast-icon">✓</div>
+    <div class="toast-content">
+      <h5 data-en="WhatsApp Daily Brief Subscribed" data-te="వాట్సాప్ డెయిలీ బ్రీఫ్ సబ్‌స్క్రైబ్ చేయబడింది">WhatsApp Daily Brief Subscribed</h5>
+      <p data-en="You will receive critical business opportunities at 8:00 AM daily." data-te="మీకు ప్రతిరోజూ ఉదయం 8 గంటలకు వ్యాపార అవకాశాల సందేశాలు అందుతాయి.">You will receive critical business opportunities at 8:00 AM daily.</p>
+    </div>
+  </div>
+
+  <!-- JavaScript file -->
+  <script src="app.js?v=5"></script>
+</body>
+</html>
